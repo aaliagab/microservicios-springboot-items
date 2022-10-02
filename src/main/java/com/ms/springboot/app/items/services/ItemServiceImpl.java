@@ -32,7 +32,7 @@ public class ItemServiceImpl implements IItemService {
 		// TODO Auto-generated method stub
 		Map<String, String> pathVariables = new HashMap<>();
 		pathVariables.put("id", id.toString());
-		Producto producto = clienteRest.getForObject("http://localhost:8001/microservicio/productos/{id}", Producto.class, pathVariables);
+		Producto producto = clienteRest.getForObject("http://localhost:8001/microservicio/productos/{id}/", Producto.class, pathVariables);
 		return new Item(producto,cantidad);
 	}
 

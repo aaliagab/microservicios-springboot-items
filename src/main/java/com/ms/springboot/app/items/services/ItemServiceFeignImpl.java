@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.ms.springboot.app.items.clients.IProductoClienteRest;
 import com.ms.springboot.app.items.models.Item;
 
 @Service("serviceFeign")
-@Primary
 public class ItemServiceFeignImpl implements IItemService {
 
 	@Autowired
@@ -20,8 +18,8 @@ public class ItemServiceFeignImpl implements IItemService {
 	@Override
 	public List<Item> findAll() {
 		// TODO Auto-generated method stub
-		return (List<Item>)(productoClienteRest.listadoProducto()
-				.stream().map(p->new Item(p, 1)).collect(Collectors.toList()));
+		return productoClienteRest.listadoProducto()
+				.stream().map(p->new Item(p, 1)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -29,5 +27,4 @@ public class ItemServiceFeignImpl implements IItemService {
 		// TODO Auto-generated method stub
 		return new Item(productoClienteRest.obtenerProducto(id), cantidad);
 	}
-
 }

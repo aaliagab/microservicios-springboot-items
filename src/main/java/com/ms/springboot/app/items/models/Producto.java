@@ -1,13 +1,18 @@
 package com.ms.springboot.app.items.models;
 
+
 import java.util.Date;
+
 
 public class Producto {
 
+	
 	private Long id;
 	private String nombre;
 	private Double precio;
 	private Date date;
+	private Integer port;
+	
 	public Long getId() {
 		return id;
 	}
@@ -31,6 +36,12 @@ public class Producto {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public Integer getPort() {
+		return port;
+	}
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 	
 	

@@ -14,15 +14,15 @@ import com.ms.springboot.app.items.models.Producto;
 @FeignClient(name = "servicio-productos")
 public interface IProductoClienteRest {
 
-	@GetMapping({"/"})
+	@GetMapping({"/microservicio/productos/"})
 	public List<Producto> listadoProducto();
 	
-	@GetMapping({"/{id}"})
+	@GetMapping({"/microservicio/productos/{id}"})
 	public Producto obtenerProducto(@PathVariable Long id);
 	
-	@PostMapping("/")
+	@PostMapping("/microservicio/productos/")
 	public Producto guardarProducto(@RequestBody Producto producto);
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/microservicio/productos/{id}")
 	public void eliminarProducto(@PathVariable Long id);
 }
