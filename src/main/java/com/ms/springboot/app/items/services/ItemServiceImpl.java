@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ms.springboot.app.items.models.Item;
 import com.ms.springboot.app.items.models.Producto;
 
-@Service
+@Service("serviceRestTemplate")
 public class ItemServiceImpl implements IItemService {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class ItemServiceImpl implements IItemService {
 	@Override
 	public List<Item> findAll() {
 		// TODO Auto-generated method stub
-		Producto[] productosArr = clienteRest.getForObject("http://localhost:8001/microservicio/productos/", Producto[].class);
+		Producto[] productosArr = clienteRest.getForObject("http://servicio-productos/microservicio/productos/", Producto[].class);
 		List<Producto> productos = Arrays.asList(productosArr);
 		return productos.stream().map(p->new Item(p,1)).collect(Collectors.toList());
 	}
@@ -32,7 +32,7 @@ public class ItemServiceImpl implements IItemService {
 		// TODO Auto-generated method stub
 		Map<String, String> pathVariables = new HashMap<>();
 		pathVariables.put("id", id.toString());
-		Producto producto = clienteRest.getForObject("http://localhost:8001/microservicio/productos/{id}/", Producto.class, pathVariables);
+		Producto producto = clienteRest.getForObject("http://servicio-productos/microservicio/productos/{id}/", Producto.class, pathVariables);
 		return new Item(producto,cantidad);
 	}
 
