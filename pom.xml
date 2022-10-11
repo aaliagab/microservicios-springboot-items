@@ -6,8 +6,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.12.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.7.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ms.springboot.app.items</groupId>
 	<artifactId>springboot-servicio-items</artifactId>
@@ -15,8 +15,8 @@
 	<name>springboot-servicio-items</name>
 	<description>Demo project for Spring Boot Microservicios</description>
 	<properties>
-		<java.version>8</java.version>
-		<spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>2021.0.4</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,7 +45,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
 		</dependency>
 	</dependencies>
 
