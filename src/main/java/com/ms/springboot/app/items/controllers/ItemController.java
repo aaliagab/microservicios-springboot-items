@@ -2,6 +2,8 @@ package com.ms.springboot.app.items.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
@@ -19,6 +21,8 @@ import com.ms.springboot.app.items.services.IItemService;
 @RestController
 //@RequestMapping("/microservicio/items")
 public class ItemController {
+	
+	private final Logger log = LoggerFactory.getLogger(ItemController.class);
 	
 	@Autowired
 	private CircuitBreakerFactory cbFactory;
@@ -41,10 +45,11 @@ public class ItemController {
 	public Item obtenerItem(@PathVariable Long id, @PathVariable Integer cantidad){
 		return cbFactory.create("items")
 				.run(() -> itemService.findById(id, cantidad),
-						e -> metodoAlternativo(id, cantidad));
+						e -> metodoAlternativo(id, cantidad, e));
 	}
 	
-	public Item metodoAlternativo(Long id, Integer cantidad){
+	public Item metodoAlternativo(Long id, Integer cantidad, Throwable error){
+		log.info(error.getMessage());
 		Item item = new Item();
 		item.setCantidad(cantidad);
 		Producto producto = new Producto();
