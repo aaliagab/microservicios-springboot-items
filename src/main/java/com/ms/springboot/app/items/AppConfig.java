@@ -31,8 +31,10 @@ public class AppConfig {
 							.failureRateThreshold(50) //por defecto es 50
 							.waitDurationInOpenState(Duration.ofSeconds(10L))//por defecto son 60s, damos 10s
 							.permittedNumberOfCallsInHalfOpenState(5) //por defecto son 10
+							.slowCallRateThreshold(50)
+							.slowCallDurationThreshold(Duration.ofSeconds(2L))
 							.build()) 
-					.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(2L)).build())
+					.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(6L)).build())
 					.build();
 		});
 	}
