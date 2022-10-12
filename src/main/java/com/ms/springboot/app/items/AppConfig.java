@@ -32,7 +32,7 @@ public class AppConfig {
 							.waitDurationInOpenState(Duration.ofSeconds(10L))//por defecto son 60s, damos 10s
 							.permittedNumberOfCallsInHalfOpenState(5) //por defecto son 10
 							.build()) 
-					.timeLimiterConfig(TimeLimiterConfig.ofDefaults())
+					.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(2L)).build())
 					.build();
 		});
 	}
