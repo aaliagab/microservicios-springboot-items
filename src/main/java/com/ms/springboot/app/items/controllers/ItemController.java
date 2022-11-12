@@ -18,6 +18,8 @@ import com.ms.springboot.app.items.models.Item;
 import com.ms.springboot.app.items.models.Producto;
 import com.ms.springboot.app.items.services.IItemService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 //@RequestMapping("/microservicio/items")
 public class ItemController {
@@ -48,6 +50,11 @@ public class ItemController {
 						e -> metodoAlternativo(id, cantidad, e));
 	}
 	
+	@CircuitBreaker(name="items", fallbackMethod = "metodoAlternativo")//primero debe ser configurado en el yml o .properties
+	@GetMapping("/idvar2/{id}/cantidad/{cantidad}")
+	public Item obtenerItemVariante2(@PathVariable Long id, @PathVariable Integer cantidad){
+		return itemService.findById(id, cantidad);
+	}
 	public Item metodoAlternativo(Long id, Integer cantidad, Throwable error){
 		log.info(error.getMessage());
 		Item item = new Item();
