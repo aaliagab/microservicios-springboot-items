@@ -1,6 +1,7 @@
 package com.ms.springboot.app.items.controllers;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import com.ms.springboot.app.items.models.Producto;
 import com.ms.springboot.app.items.services.IItemService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 
 @RestController
 //@RequestMapping("/microservicio/items")
@@ -55,6 +57,14 @@ public class ItemController {
 	public Item obtenerItemVariante2(@PathVariable Long id, @PathVariable Integer cantidad){
 		return itemService.findById(id, cantidad);
 	}
+	
+	@CircuitBreaker(name="items", fallbackMethod = "metodoAlternativo2")//puede combinarse o no con timelimiter
+	@TimeLimiter(name="items")//primero debe ser configurado en el yml o .properties
+	@GetMapping("/idvar3/{id}/cantidad/{cantidad}")
+	public CompletableFuture<Item> obtenerItemVariante3(@PathVariable Long id, @PathVariable Integer cantidad){
+		return CompletableFuture.supplyAsync(()->itemService.findById(id, cantidad));
+	}
+	
 	public Item metodoAlternativo(Long id, Integer cantidad, Throwable error){
 		log.info(error.getMessage());
 		Item item = new Item();
@@ -67,6 +77,20 @@ public class ItemController {
 		item.setProducto(producto);
 		
 		return item;
+	}
+	
+	public CompletableFuture<Item> metodoAlternativo2(Long id, Integer cantidad, Throwable error){
+		log.info(error.getMessage());
+		Item item = new Item();
+		item.setCantidad(cantidad);
+		Producto producto = new Producto();
+		producto.setId(id);
+		producto.setNombre("Camara Sony");
+		producto.setPrecio(500.00);
+		
+		item.setProducto(producto);
+		
+		return CompletableFuture.supplyAsync(()->item);
 	}
 
 }
